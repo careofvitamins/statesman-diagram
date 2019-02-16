@@ -10,7 +10,7 @@ class definition to the
 [DOT](https://en.wikipedia.org/wiki/DOT_%28graph_description_language%29) format.
 
 Also adds a Rake task called `statesman:diagram`. It runs the `dot`
-program (GraphViz) to make a PNG image from the DOT representation of the
+program (GraphViz) to make an SVG image from the DOT representation of the
 machine class.
 
 ## Installation
@@ -40,10 +40,10 @@ Or install it yourself as:
 ## Usage
 
 Run `rake statesman:diagram[My::State::Machine::Class]`.
-Find the state diagram of this class in `My_State_Machine_Class.png`.
+Find the state diagram of this class in `My_State_Machine_Class.svg`.
 
 You can also specify the name of the file `rake statesman:diagram[My::State::Machine::Class, ./temp/state]`
-Find the state diagram of this class in `./temp/state.png`.
+Find the state diagram of this class in `./temp/state.svg`.
 
 ## Development
 

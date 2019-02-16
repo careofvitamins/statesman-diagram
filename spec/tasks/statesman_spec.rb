@@ -19,17 +19,17 @@ end
 describe 'statesman:diagram' do
   before { Rake::Task['statesman:diagram'].reenable }
 
-  it 'produces a png image with a diagram of the given state machine class' do
+  it 'produces an svg image with a diagram of the given state machine class' do
     Rake::Task['statesman:diagram'].invoke('Spaghetti::Machine')
-    expect(File.exists?('Spaghetti_Machine.png')).to be true
-    expect(File.size('Spaghetti_Machine.png')).to be > 100
-    FileUtils.rm('Spaghetti_Machine.png')
+    expect(File.exists?('Spaghetti_Machine.svg')).to be true
+    expect(File.size('Spaghetti_Machine.svg')).to be > 100
+    FileUtils.rm('Spaghetti_Machine.svg')
   end
 
-  it 'produces a png image with the transferred name' do
+  it 'produces an svg image with the transferred name' do
     Rake::Task['statesman:diagram'].invoke('Spaghetti::Machine', './machine')
-    expect(File.exists?('./machine.png')).to be true
-    expect(File.size('./machine.png')).to be > 100
-    FileUtils.rm('./machine.png')
+    expect(File.exists?('./machine.svg')).to be true
+    expect(File.size('./machine.svg')).to be > 100
+    FileUtils.rm('./machine.svg')
   end
 end

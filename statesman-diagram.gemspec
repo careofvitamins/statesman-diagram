@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Ilya Vassilevsky',      'Andrey Lunetskas']
   spec.email         = ['vassilevsky@gmail.com', 'lunacorp@mail.ru']
 
-  spec.summary       = 'Generates DOT representations of Statesman machines and runs dot to render them to PNGs'
+  spec.summary       = 'Generates DOT representations of Statesman machines and runs dot to render them to SVGs'
   spec.homepage      = 'https://github.com/vassilevsky/statesman-diagram'
   spec.license       = 'MIT'
   spec.files         = Dir['lib/**/*.rb', 'tasks/**/*.rb', 'bin/*', '[A-Z]*']

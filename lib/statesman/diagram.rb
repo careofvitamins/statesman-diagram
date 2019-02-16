@@ -14,11 +14,11 @@ module Statesman
       format("digraph %{name} {\n  %{body}\n}", name: @name, body: dot_body.join("\n  "))
     end
 
-    def to_png(file_name = nil)
+    def to_svg(file_name = nil)
       file_name ||= @name
-      file_name += '.png'
+      file_name += '.svg'
 
-      build_png(file_name)
+      build_svg(file_name)
     end
 
     private
@@ -32,8 +32,8 @@ module Statesman
       end.flatten
     end
 
-    def build_png(file_name)
-      cmd = ['dot', '-Tpng', "-o#{file_name}"]
+    def build_svg(file_name)
+      cmd = ['dot', '-Tsvg', "-o#{file_name}"]
 
       puts "Running '#{cmd.join(' ')}' with this ^ as stdin..."
 
