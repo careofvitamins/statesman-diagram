@@ -26,7 +26,8 @@ module Statesman
     # @return [String]
     def dot_body
       @graph.map do |vertex, edges|
-        edges.map do |to|
+        vertex == "derailed" ? [] :
+        edges.select { |edge| edge != "derailed" }.map do |to|
           "#{vertex} -> #{to};"
         end
       end.flatten
