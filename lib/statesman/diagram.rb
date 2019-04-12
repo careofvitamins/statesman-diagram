@@ -24,13 +24,12 @@ module Statesman
     private
 
     # @return [String]
-    def dot_body
+    def dot_body(without_vertex = 'derailed')
       @graph.map do |vertex, edges|
-        vertex == "derailed" ? [] :
-        edges.select { |edge| edge != "derailed" }.map do |to|
+        edges.map do |to|
           "#{vertex} -> #{to};"
         end
-      end.flatten
+      end.flatten.select { |line| not line.include? without_vertex }
     end
 
     def build_svg(file_name)
