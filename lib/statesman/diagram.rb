@@ -25,9 +25,10 @@ module Statesman
 
     # @return [String]
     def dot_body
+      vertex_to_remove = "derailed"
       @graph.map do |vertex, edges|
-        vertex == "derailed" ? [] :
-        edges.select { |edge| edge != "derailed" }.map do |to|
+        vertex == vertex_to_remove ? [] :
+        edges.select { |edge| edge != vertex_to_remove }.map do |to|
           "#{vertex} -> #{to};"
         end
       end.flatten
