@@ -29,7 +29,7 @@ module Statesman
       @graph.map do |vertex, edges|
         vertex == vertex_to_remove ? [] :
         edges.select { |edge|
-          edge != vertex_to_remove and !(edge == "shipped" && (not ["packed", "proteins_packed"].include?(vertex)))
+          edge != vertex_to_remove and (edge != "shipped" or ["packed", "proteins_packed"].include?(vertex))
         }.map do |to|
           "#{vertex} -> #{to};"
         end
