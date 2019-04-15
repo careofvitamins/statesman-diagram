@@ -16,9 +16,13 @@ module Statesman
 
     def to_svg(file_name = nil)
       file_name ||= @name
-      file_name += '.svg'
 
-      build_svg(file_name)
+      @happy = false
+      build_svg(file_name + '.svg')
+
+      @happy = true
+      file_name += '_happy'
+      build_svg(file_name + '.svg')
     end
 
     private
@@ -27,9 +31,9 @@ module Statesman
     def dot_body
       vertex_to_remove = "derailed"
       @graph.map do |vertex, edges|
-        vertex == vertex_to_remove ? [] :
+        (@happy && vertex == vertex_to_remove) ? [] :
         edges.select { |edge|
-          edge != vertex_to_remove and (edge != "shipped" or ["packed", "proteins_packed"].include?(vertex))
+          !@happy || (edge != vertex_to_remove and (edge != "shipped" or ["packed", "proteins_packed"].include?(vertex)))
         }.map do |to|
           "#{vertex} -> #{to};"
         end
