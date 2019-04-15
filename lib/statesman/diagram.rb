@@ -28,7 +28,9 @@ module Statesman
       vertex_to_remove = "derailed"
       @graph.map do |vertex, edges|
         vertex == vertex_to_remove ? [] :
-        edges.select { |edge| edge != vertex_to_remove }.map do |to|
+        edges.select { |edge|
+          edge != vertex_to_remove and !(edge == "shipped" && (not ["packed", "proteins_packed"].include?(vertex)))
+        }.map do |to|
           "#{vertex} -> #{to};"
         end
       end.flatten
