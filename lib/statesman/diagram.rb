@@ -33,13 +33,16 @@ module Statesman
     # @return [String]
     def dot_body
       @graph.map do |vertex, edges|
-        (@filtered && vertex == @vertex_to_remove) ? [] :
-        edges.select { |edge|
-          keep_edge?(vertex, edge)
-        }.map do |to|
+        get_vertex_edges(vertex, edges).map do |to|
           "#{vertex} -> #{to};"
         end
       end.flatten
+    end
+
+    def get_vertex_edges(vertex, edges)
+      return [] if @filtered && vertex == @vertex_to_remove
+
+      edges.select{ |edge| keep_edge?(vertex, edge ) }
     end
 
     def keep_edge?(vertex, edge)
