@@ -35,11 +35,15 @@ module Statesman
       @graph.map do |vertex, edges|
         (@happy && vertex == @vertex_to_remove) ? [] :
         edges.select { |edge|
-          !@happy || (edge != @vertex_to_remove and (edge != "shipped" or ["packed", "proteins_packed"].include?(vertex)))
+          keep_edge?(vertex, edge)
         }.map do |to|
           "#{vertex} -> #{to};"
         end
       end.flatten
+    end
+
+    def keep_edge?(vertex, edge)
+      !@happy || (edge != @vertex_to_remove and (edge != "shipped" or ["packed", "proteins_packed"].include?(vertex)))
     end
 
     def build_svg(file_name)
