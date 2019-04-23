@@ -43,7 +43,11 @@ module Statesman
     end
 
     def keep_edge?(vertex, edge)
-      !@happy || (edge != @vertex_to_remove and (edge != "shipped" or ["packed", "proteins_packed"].include?(vertex)))
+      return true if not @happy
+      return false if edge == @vertex_to_remove
+      return true if edge != "shipped"
+
+      ["packed", "proteins_packed"].include?(vertex)
     end
 
     def build_svg(file_name)
