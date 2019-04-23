@@ -7,6 +7,7 @@ module Statesman
     def initialize(name:, graph:)
       @name  = name
       @graph = graph
+      @vertex_to_remove = "derailed"
     end
 
     # @return [String] diagram in DOT format.
@@ -16,9 +17,15 @@ module Statesman
 
     def to_svg(file_name = nil)
       file_name ||= @name
-      file_name += '.svg'
 
-      build_svg(file_name)
+      @filtered = false
+      build_svg(file_name + '.svg')
+
+      return unless @graph.key?(@vertex_to_remove)
+
+      @filtered = true
+      file_name += '_filtered'
+      build_svg(file_name + '.svg')
     end
 
     private
@@ -26,10 +33,24 @@ module Statesman
     # @return [String]
     def dot_body
       @graph.map do |vertex, edges|
-        edges.map do |to|
+        get_vertex_edges(vertex, edges).map do |to|
           "#{vertex} -> #{to};"
         end
       end.flatten
+    end
+
+    def get_vertex_edges(vertex, edges)
+      return [] if @filtered && vertex == @vertex_to_remove
+
+      edges.select{ |edge| keep_edge?(vertex, edge ) }
+    end
+
+    def keep_edge?(vertex, edge)
+      return true if not @filtered
+      return false if edge == @vertex_to_remove
+      return true if edge != "shipped"
+
+      ["packed", "proteins_packed"].include?(vertex)
     end
 
     def build_svg(file_name)
