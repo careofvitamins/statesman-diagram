@@ -7,7 +7,7 @@ module Statesman
     def initialize(name:, graph:)
       @name  = name
       @graph = graph
-      @vertex_to_remove = "derailed"
+      @vertices_to_remove = ["derailed", "halted"]
     end
 
     # @return [String] diagram in DOT format.
@@ -21,7 +21,7 @@ module Statesman
       @filtered = false
       build_svg(file_name + '.svg')
 
-      return unless @graph.key?(@vertex_to_remove)
+      return unless @vertices_to_remove.any? { |vertex| @graph.key?(vertex) }
 
       @filtered = true
       file_name += '_filtered'
@@ -40,14 +40,14 @@ module Statesman
     end
 
     def get_vertex_edges(vertex, edges)
-      return [] if @filtered && vertex == @vertex_to_remove
+      return [] if @filtered && @vertices_to_remove.include?(vertex)
 
       edges.select{ |edge| keep_edge?(vertex, edge ) }
     end
 
     def keep_edge?(vertex, edge)
       return true if not @filtered
-      return false if edge == @vertex_to_remove
+      return false if @vertices_to_remove.include?(edge)
       return true if edge != "shipped"
 
       ["packed", "proteins_packed"].include?(vertex)
